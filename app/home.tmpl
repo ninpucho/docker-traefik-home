@@ -149,9 +149,9 @@
                 {{ $entrypoint_label := print "traefik.http.routers." $service_name ".entrypoints" }}
                 {{ $entrypoint := index $container.Labels $entrypoint_label }}
                 {{ $protocol := "" }}
-                {{ if eq $entrypoint "websecure" }}
+                {{ if or (eq $entrypoint "websecure") (eq $entrypoint "https") }}
                     {{ $protocol = "https" }}
-                {{ else if eq $entrypoint "web" }}
+                {{ else if or (eq $entrypoint "web") (eq $entrypoint "http") }}
                     {{ $protocol = "http" }}
                 {{ else }}
                     {{/* entrypoint not supported */}}
